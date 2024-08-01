@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     // Write in editText then print the content on textView
     fun clickHandler(view: View) {
-        var nameEditText :  EditText = findViewById(R.id.edName)
+        var nameEditText :  EditText = findViewById(R.id.etName)
         var mainTextView : TextView = findViewById(R.id.tvMain)
 
         var data = nameEditText.text.toString()
@@ -42,11 +42,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(hIntention)
     }
 
-    fun openDailer(view: View) {
-        var dialerInterntion = Intent(Intent.ACTION_DIAL, Uri.parse("tel:12345678"))
-        startActivity(dialerInterntion)
+    fun openDialer(view: View) {
+        var dialerIntention = Intent(Intent.ACTION_DIAL, Uri.parse("tel:12345678"))
+        startActivity(dialerIntention)
     }
-
 
     fun createAlarm(message: String, hour: Int, minutes: Int) {
         val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
