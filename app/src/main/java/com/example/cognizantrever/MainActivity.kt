@@ -1,6 +1,7 @@
 package com.example.cognizantrever
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.AlarmClock
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
-
 
     // Write in editText then print the content on textView
     fun clickHandler(view: View) {
@@ -63,7 +63,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openMyCalendar(view: View) {
-        var calIntent = Intent("cognizant.portugal.android")
+        //var calIntent = Intent("cognizant.portugal.android")  //calling calendar
+        var calIntent = Intent("ineed.water")
         startActivity(calIntent)
+    }
+
+    // Request code for SMS permission
+    private val SMS_PERMISSION_CODE = 101
+    // Handle the result of the permission request
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Check if the result corresponds to our SMS permission request
+        if (requestCode == SMS_PERMISSION_CODE) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Permission granted
+            } else {
+                // Permission denied
+            }
+        }
     }
 }
