@@ -9,7 +9,7 @@ import android.util.Log
 class SMSReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.i(TAG, "Woolala, sms from cognizant.")
+        //Log.i(TAG, "Woolala, sms from cognizant.")
 
         val bundle = intent.extras
         if (bundle != null) {

@@ -1,30 +1,32 @@
 package com.example.cognizantrever
 
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.telephony.PhoneStateListener
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.cognizantrever.R
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
+
 
     // Write in editText then print the content on textView
     fun clickHandler(view: View) {
@@ -38,11 +40,12 @@ class MainActivity : AppCompatActivity() {
         var hIntention = Intent(this, HomeActivity::class.java)
         //sends info with name mykey with the data in data
         hIntention.putExtra("mykey", data)
-        //opens acticvity
+        //opens activity
         startActivity(hIntention)
     }
 
     fun openDialer(view: View) {
+        //opens the dialer with the given phone number
         var dialerIntention = Intent(Intent.ACTION_DIAL, Uri.parse("tel:12345678"))
         startActivity(dialerIntention)
     }
@@ -63,23 +66,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openMyCalendar(view: View) {
-        //var calIntent = Intent("cognizant.portugal.android")  //calling calendar
-        var calIntent = Intent("ineed.water")
+        var calIntent = Intent("cognizant.portugal.android")  //calling calendar
+        //var calIntent = Intent("ineed.water")
         startActivity(calIntent)
     }
 
-    // Request code for SMS permission
-    private val SMS_PERMISSION_CODE = 101
-    // Handle the result of the permission request
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Check if the result corresponds to our SMS permission request
-        if (requestCode == SMS_PERMISSION_CODE) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Permission granted
-            } else {
-                // Permission denied
-            }
-        }
+    fun sendFlightBroadcast(view: View){
+        var flightIntent = Intent("ihave.flight")
+        sendBroadcast(flightIntent)
     }
 }
