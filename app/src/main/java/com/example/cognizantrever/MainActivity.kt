@@ -61,4 +61,9 @@ class MainActivity : AppCompatActivity() {
     fun setAlarm(view: View) {
         createAlarm("Im coming for you!", 3,25 )
     }
+
+    fun openMyCalendar(view: View) {
+        var calIntent = Intent("cognizant.portugal.android")
+        startActivity(calIntent)
+    }
 }
