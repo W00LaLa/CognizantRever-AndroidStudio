@@ -1,22 +1,18 @@
 package com.example.cognizantrever
 
-import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.AlarmClock
-import android.telephony.PhoneStateListener
-import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import android.Manifest
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
     }
-
 
     // Write in editText then print the content on textView
     fun clickHandler(view: View) {
