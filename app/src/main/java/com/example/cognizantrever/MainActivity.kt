@@ -1,7 +1,6 @@
 package com.example.cognizantrever
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.AlarmClock
@@ -10,17 +9,28 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.Manifest
+import android.content.ComponentName
+import android.widget.Button
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import android.util.Log
+import com.example.cognizantrever.networking.MarsApi
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var jsonButton: Button
+    var TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        jsonButton = findViewById(R.id.btnJson)
+        jsonButton.setOnClickListener {
+            getMarsPhotos()
+        }
     }
 
     // Write in editText then print the content on textView
@@ -68,6 +78,21 @@ class MainActivity : AppCompatActivity() {
 
     fun sendFlightBroadcast(view: View){
         var flightIntent = Intent("ihave.flight")
-        sendBroadcast(flightIntent)
+        //sendBroadcast(flightIntent)
+        intent.setComponent(
+            ComponentName(
+                "com.example.secondcognizant",
+                "com.example.secondcognizant.FlightReceiver"
+            )
+        )
+
+        sendBroadcast(flightIntent,"mypermission.password.portugal")
+    }
+
+    private fun getMarsPhotos() {
+        GlobalScope.launch(Dispatchers.IO) {       //async await
+            val listMarsPhoto = MarsApi.retrofitService.getPhotos()
+            Log.i(TAG,listMarsPhoto.get(0).imgSrc)
+        }
     }
 }
