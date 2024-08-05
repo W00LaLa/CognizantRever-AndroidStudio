@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import android.util.Log
 import com.example.cognizantrever.networking.MarsApi
 
-
 class MainActivity : AppCompatActivity() {
     lateinit var jsonButton: Button
     var TAG = MainActivity::class.java.simpleName

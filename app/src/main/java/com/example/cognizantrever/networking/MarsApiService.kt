@@ -20,7 +20,8 @@ private val retrofit = Retrofit.Builder()
 //create--POST read--GET update--PUT delete-DELETE
 interface MarsApiService {
     @GET("photos")
-    suspend fun getPhotos():List<MarsPhoto>  //http.get(url/endpoint):Response
+    suspend fun getPhotos():List<MarsPhoto>
+    //http.get(url/endpoint):Response
 }
 
 object MarsApi {
