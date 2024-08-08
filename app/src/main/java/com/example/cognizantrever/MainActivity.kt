@@ -16,15 +16,22 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import android.util.Log
 import com.example.cognizantrever.networking.MarsApi
+import com.example.cognizantrever.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding:ActivityMainBinding
+
     lateinit var jsonButton: Button
     var TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        //enableEdgeToEdge()
+        //setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val constraintLayout = binding.root
+        setContentView(constraintLayout)
 
         jsonButton = findViewById(R.id.btnJson)
         jsonButton.setOnClickListener {
@@ -93,5 +100,17 @@ class MainActivity : AppCompatActivity() {
             val listMarsPhoto = MarsApi.retrofitService.getPhotos()
             Log.i(TAG,listMarsPhoto.get(0).imgSrc)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        var serviceIntent = Intent(this,MyService::class.java)
+
+        binding.btnStart.setOnClickListener {
+            //start a service
+            startService(serviceIntent)
+        }
+
+        binding.btnStop.setOnClickListener { stopService(serviceIntent) }
     }
 }
