@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             //start a service
+            serviceIntent.putExtra("url","imageurl.com")
             startService(serviceIntent)
         }
 

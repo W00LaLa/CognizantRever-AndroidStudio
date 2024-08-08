@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import android.media.MediaPlayer
 
 class MyService : Service() {
     var TAG = MyService::class.java.simpleName
@@ -15,10 +16,11 @@ class MyService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        Log.i(TAG,"my service started")
-
+        //Log.i(TAG,"my service started")
+        Log.i(TAG,"my service started--"+intent?.getStringExtra("url"))
+        var player = MediaPlayer.create(this,R.raw.tune)
+        player.start()
         return START_STICKY
-
     }
 
     override fun onDestroy() {
