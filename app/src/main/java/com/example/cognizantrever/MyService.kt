@@ -5,9 +5,15 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import android.media.MediaPlayer
+import android.os.Binder
 
 class MyService : Service() {
     var TAG = MyService::class.java.simpleName
+    private val localBinder = LocalBinder()
+
+    inner class LocalBinder : Binder() {
+        fun getMyService(): MyService = this@MyService
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -30,6 +36,16 @@ class MyService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        TODO("Return the communication channel to the service.")
+        Log.i(TAG,"some activity is trying to bind to this service")
+        return localBinder;
     }
+
+    fun latestScore():Int{
+        return 5;
+    }
+
+    fun add(a:Int, b:Int):Int{
+        return a+b;
+    }
+
 }

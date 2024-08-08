@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.content.ComponentName
+import android.content.ServiceConnection
+import android.os.IBinder
 import android.widget.Button
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -113,5 +115,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnStop.setOnClickListener { stopService(serviceIntent) }
+
+        binding.btnBind.setOnClickListener {
+            bindService(serviceIntent,mConnection, BIND_AUTO_CREATE)
+        }
+        binding.btnUnbind.setOnClickListener {
+            // stopService(serviceIntent)
+            unbindService(mConnection)
+        }
+    }
+
+    val mConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, localBinder: IBinder?) {
+            //var myService = MyService()
+            val binder = localBinder as MyService.LocalBinder
+            var myService = binder.getMyService()
+            var soccerScore = myService.latestScore()
+            Log.i(TAG, "score is--" + soccerScore)
+            var sum = myService.add(10, 20)
+            Log.i(TAG, "sum is--" + sum)
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.i(TAG, "service disconnected --")
+        }
     }
 }
